@@ -1,18 +1,25 @@
-const net = require('net');
+//const net = require('net');
+const { connect } = require('./client');
 
-const connect = function() {
-  const conn = net.createConnection({
-    host: '192.168.40.99',
-    port: 50541
+// setup interface to handle user input from stdin
+
+const setupInput = function() {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding("utf8");
+  stdin.resume();
+  stdin.on("data", handleUserInput);
+  return stdin;
+};
+const handleUserInput = function() {
+  process.stdin.on("data", (key) => {
+    if (key === '\u0003') {
+      process.exit();
+    }
   });
 
-  conn.setEncoding("utf8");
-  conn.on("data", (data) => {
-    console.log("you ded cuz you idled ", data);
-  });
-
-  return conn;
 };
 
 console.log("Connecting...");
 connect();
+setupInput();
