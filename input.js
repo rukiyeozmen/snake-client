@@ -26,6 +26,15 @@ const handleUserInput = function() {
     if (key === 'd') {
       connection.write("Move: right");
     }
+    if (key === '/') {
+      connection.write("Say: slash ");
+    }
+    if (key === '*') {
+      connection.write("Say: star ");
+    }
+    if (key === '@') {
+      connection.write("Say: at ");
+    }
   });
 
 };
